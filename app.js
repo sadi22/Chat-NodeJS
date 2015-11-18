@@ -51,8 +51,8 @@ io.sockets.on('connection', function(socket){
     // Handle the sending of messages
     socket.on('msg', function(data){
 
-        // When the server receives a message,
-        // it sends it to the other person in the session.
+        //When the server receives a message,
+        //it sends it to the other person in the session.
          socket.broadcast.emit('receive', {msg: data.msg, user: data.user});
 
     });
