@@ -4,9 +4,9 @@
   "description": "Chat Application",
   "main": "app.js",
   "dependencies": {
-    "mongoose": "0.2.4",
+    "mongoose": "latest",
     "express": "4.8.2",
-    "socket.io": "latest"
+    "socket.io": "^1.0.6"
   },
   "author": "Sadi"
 
