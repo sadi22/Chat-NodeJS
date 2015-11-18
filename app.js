@@ -6,8 +6,6 @@ var express = require('express'),
     io = require('socket.io').listen(server),
     mongoose = require('mongoose') ;
 
-
-
 //cache session name
 var session = [];
 
