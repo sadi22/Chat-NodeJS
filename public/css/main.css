@@ -73,7 +73,7 @@ h1{
 .chatscreen {
 
     overflow: auto;
-    height: 375px;
+    height: 350px;
     background-color: #f0f1f3;
 }
 
@@ -143,4 +143,15 @@ h1{
     float: left;
     width: 80px;
     border-radius: 50%;
+}
+
+p.ex {
+    font: italic bold 24px Georgia, serif;
+    text-transform: capitalize;
+    color: dodgerblue;
+}
+
+.session_name{
+    padding: 2px;
+    text-align: center ;
 }

@@ -36,6 +36,7 @@ io.sockets.on('connection', function(socket){
         }
         // Use the socket object to store data.
         socket.username= data;
+        socket.emit('session', session);
 
     });
 
@@ -44,6 +45,7 @@ io.sockets.on('connection', function(socket){
         // Use the socket object to store data.
         socket.sessionname= data;
         session.push(socket.sessionname);
+        socket.emit('session', session);
     });
 
     // Handle the sending of messages

@@ -51,10 +51,16 @@ $(document).ready(function() {
         $('.session_area').fadeOut(1500);
         $('.chatscreen').fadeIn(1500);
         $('.message_area').fadeIn(1500);
+
         socket.emit('session' ,session)
         yoursession.val('');
         return false;
 
+    });
+
+
+    socket.on('session', function(data){
+        $('.session_name').find('p').text(data[0]);
     });
 
 
