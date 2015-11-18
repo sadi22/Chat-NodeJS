@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
+
+    <!--load stylesheet-->
+    <link type="text/css" rel="stylesheet" href="../css/main.css" />
+
+</head>
+<body>
+<header>
+    <div class="jumbotron">
+        <h1>15 Minutes Chat</h1>
+    </div>
+</header>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class= "main_content">
+
+                <div class="login_area">
+                    <h2>Who are you?</h2>
+                    <form role="form" class="login_form">
+                        <div class="form-group">
+                            <input type="text" class="yourname" placeholder="Enter Session">
+                        </div>
+                        <button type="submit" class="submit">Submit</button>
+                    </form>
+                </div>
+
+
+
+
+                <div class= 'afterlogin'>
+
+                    <div class="col-sm-4">
+                        <div class= 'chat_history'>
+                            <table class="table table-hover">
+                                <tbody>
+                                <tr>
+                                    <td>John</td>
+                                    <td>Doe</td>
+                                    <td>john@example.com</td>
+                                </tr>
+                                <tr>
+                                    <td>July</td>
+                                    <td>Dooley</td>
+                                    <td>july@example.com</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-8">
+                        <div class= 'session_area'>
+                            <form class= 'session_form'>
+                                <div class="form-group" >
+                                    <input type="text" class="yoursession" placeholder="Enter Session"
+                                            name="yoursession">
+                                </div>
+                                <button type="submit" class="submit">Submit</button>
+                            </form>
+                        </div>
+
+                        <div class= 'chatscreen'>
+                            <ul class="chats">
+                                <!-- The chat messages will go here -->
+                            </ul>
+                        </div>
+
+
+                        <div class= 'message_area'>
+                            <form role="form" class="message_form">
+                                <div class="form-group">
+                                    <textarea class="form-control" rows="5" id="messages"></textarea>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="../js/jquery-2.1.4.min.js"></script>
+<script src="../js/moment.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="../js/main.js"></script>
+
+</body>
+</html>

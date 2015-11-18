@@ -1,0 +1,146 @@
+body {
+    background-color: #f0f1f3;
+    color: #667073;
+    font: 16px/1.3 'Arial',sans-serif;
+}
+
+.jumbotron{
+    text-align: center;
+    background-color: black;
+}
+
+h1{
+    color: #eee;
+}
+
+.col-sm-4, .col-sm-8{
+    border: solid;
+    height: 500px;
+}
+
+
+.main_content{
+    background-color: #ffffff;
+    border-radius: 3px;
+    box-shadow: 0px 3px 3px #e3e4e6;
+    color: #637277;
+    height: 500px;
+}
+
+.login_area{
+    padding-left: 400px;
+    padding-top: 200px;
+}
+
+.session_area{
+    padding-left: 75px;
+    padding-top: 130px;
+    height: 375px;
+}
+
+.yourname ,.yoursession{
+
+    padding-left: 10px;
+    width: 245px;
+    height: 30px;
+    border-radius: 3px;
+    box-shadow: 0px 3px 3px #e3e4e6;
+    background-color: #f0f1f3;
+    border: 1px solid #d1d1d1;
+    border-radius: 3px;
+    box-shadow: 0px 3px 3px #e3e4e6;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.submit{
+    float: left;
+    width: 110px;
+    height: 40px;
+    text-align: center;
+    background-color: #73b4d4;
+    border: none;
+    box-shadow: 3px 3px 3px #efedee;
+    border-radius: 2px;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+}
+.afterlogin{
+    display: none;
+}
+
+.chatscreen {
+
+    overflow: auto;
+    height: 375px;
+    background-color: #f0f1f3;
+}
+
+.chats {
+    list-style-type: none;
+    margin-top:10px;
+}
+
+.me {
+    clear:both;
+    float:left;
+    margin-bottom:10px;
+}
+
+.other {
+    clear:both;
+    float:right;
+    margin-bottom:10px;
+}
+
+.other .image{
+    float:right;
+}
+
+.chats  p {
+    text-align:left;
+    float: left;
+    display: inline-block;
+    margin-left: 20px;
+    margin-bottom:30px;
+    padding: 10px 10px;
+    min-width: 100px;
+    min-height: 10px;
+    max-width: 435px;
+    background-color: #FFF;
+    border-radius: 3px;
+    box-shadow: 0px 3px 3px #E3E4E6;
+    color: #637277;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.image {
+    clear: both;
+    float: left;
+    height: 160px;
+    width: 80px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.image b {
+    overflow: hidden;
+    display: block;
+    clear: both;
+    padding-top: 7px;
+}
+.image .timesent {
+    font-size: 12px;
+    line-height: 1.2;
+    display: block;
+    opacity: 0.8;
+    padding-top: 4px;
+}
+
+.image i {
+    float: left;
+    width: 80px;
+    border-radius: 50%;
+}

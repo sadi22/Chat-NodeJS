@@ -1,0 +1,16 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "\"Hello\"",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "ejs": "^2.3.4",
+    "express": "^4.10.2",
+    "socket.io": "^1.3.7"
+  },
+  "author": "\"sadi\"",
+  "license": "ISC"
+}
