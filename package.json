@@ -1,12 +1,13 @@
 {
-  "name": "test",
+  "name": "Chat-App",
   "version": "1.0.0",
-  "description": "Chat Application",
+  "description": "Real Time Chat Application",
   "main": "app.js",
   "dependencies": {
     "mongoose": "latest",
     "express": "4.8.2",
-    "socket.io": "^1.0.6"
+    "socket.io": "^1.0.6",
+    "ejs": "^1.0.0"
   },
   "author": "Sadi"
 

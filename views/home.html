@@ -7,13 +7,13 @@
     <title>Home</title>
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
     <!-- Optional theme -->
-    <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 
     <!--load stylesheet-->
-    <link type="text/css" rel="stylesheet" href="../css/main.css" />
+    <link type="text/css" rel="stylesheet" href="css/main.css" />
 
 </head>
 <body>
@@ -42,18 +42,10 @@
 
                     <div class="col-sm-4">
                         <div class= 'chat_history'>
+                            <div style="border: solid"> Chat </div>
                             <table class="table table-hover">
                                 <tbody>
-                                <tr>
-                                    <td>John</td>
-                                    <td>Doe</td>
-                                    <td>john@example.com</td>
-                                </tr>
-                                <tr>
-                                    <td>July</td>
-                                    <td>Dooley</td>
-                                    <td>july@example.com</td>
-                                </tr>
+
                                 </tbody>
                             </table>
                         </div>
@@ -82,13 +74,8 @@
 
 
                         <div class= 'message_area'>
-                            <form role="form" class="message_form">
-
-                                <div class="form-group">
-                                    <textarea class="form-control" rows="4" id="messages"
-                                              placeholder="Enter Session">
-                                    </textarea>
-                                </div>
+                            <form class="message_form">
+                                    <textarea id="message" placeholder="Write something.."></textarea>
                             </form>
 
                         </div>
@@ -102,11 +89,11 @@
 
 
 <!-- Latest compiled and minified JavaScript -->
-<script src="../js/jquery-2.1.4.min.js"></script>
-<script src="../js/moment.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
-<script src="../js/main.js"></script>
+<script src="js/main.js"></script>
 
 </body>
 </html>

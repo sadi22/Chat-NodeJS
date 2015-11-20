@@ -155,3 +155,19 @@ p.ex {
     padding: 2px;
     text-align: center ;
 }
+
+#message {
+    width: 610.656px;
+    height: 96px;
+    display: block;
+    float:left;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border: 1px solid #cccccc;
+    border-radius: 2px;
+    padding-left: 20px;
+    padding-top: 20px;
+    resize: none;
+    font:inherit;
+    color:inherit;
+}
