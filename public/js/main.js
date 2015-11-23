@@ -11,6 +11,8 @@ $(document).ready(function() {
         scroll = 0,
         flag = 1;
 
+    var running = 0;
+
     //form
     var yourname= $('.yourname'),
         yoursession= $('.yoursession');
@@ -33,6 +35,7 @@ $(document).ready(function() {
                 $('.message_area').css('display', 'none');
             } else {
                 $('.session_area').fadeOut(1500);
+                $('.stopwatch').css('display', 'block');
         }
         });
         yourname.val('');
@@ -52,6 +55,7 @@ $(document).ready(function() {
         $('.session_area').fadeOut(1500);
         $('.chatscreen').fadeIn(1500);
         $('.message_area').fadeIn(1500);
+        $('.stopwatch').css('display', 'block');
         socket.emit('session' , session);
         yoursession.val('');
         return false;
@@ -63,7 +67,6 @@ $(document).ready(function() {
     });
 
     socket.on('user', function(data){
-        console.log('Hello')
         $('.table tbody > tr').remove();
         for (var i= 0; i<data.length; i++)
         {
@@ -107,11 +110,18 @@ $(document).ready(function() {
         }
     });
 
+    socket.on('timer', function (data) {
+        $('.startPause').click( function(){
+            $('.startPause').css('backgroundColor','#e60000');
+            socket.emit('Stop Session', running);
+        } );
+        $('.outputs').html(data.min + ':' + data.secs%60);
+    });
+
 
 
     $('.table').on('click', 'td', function () {
         socket.emit('load all messages', $(this).text());
-        //console.log($(this).text());
     });
 
     socket.on('load all messages', function(data){
@@ -127,14 +137,21 @@ $(document).ready(function() {
 
     });
 
+    socket.on('Session Ended', function(data){
+        $('#message').hide();
+    });
+
+
+    ////stopwatch starsts
+    //$('.startPause').click(startPause);
+
+
     // Update the relative time stamps on the chat messages every minute
     setInterval(function(){
-
         messageTimeSent.each(function(){
             var each = moment($(this).data('time'));
             $(this).text(each.fromNow());
         });
-
     },60000);
 
     // Function that creates a new chat message
@@ -185,7 +202,6 @@ $(document).ready(function() {
 
     function scrollToBottom(){
         scroll = scroll+150;
-        console.log(scroll);
         $(".chatscreen").animate({ scrollTop: scroll},1000);
 
     }

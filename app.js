@@ -9,6 +9,11 @@ var session = [],
     name = [],
     flag= 0;
 
+//for stopwatch
+var time=0;
+var timer=0;
+var running = 0;
+
 
 // environments
 app.set('views', __dirname+ '/views');
@@ -49,21 +54,23 @@ io.sockets.on('connection', function(socket){
         // Use the socket object to store data.
         socket.username= data;
         name.push(socket.username);
-        console.log(session.length);
         if(session.length > 0){
             callback(false);
-
             if(flag){
                 socket.emit('user', name);
                 socket.broadcast.emit('user', name);
             }
-
         }else{
             callback(true);
             Chat.distinct('ses',{user:socket.username}, function(err , docs){
                 if(err) throw err;
                 socket.emit('load all sessions', docs);
             });
+        }
+
+        if(running){
+            time = timer;
+            increment(time);
         }
         socket.emit('session', session[0]);
 
@@ -83,11 +90,17 @@ io.sockets.on('connection', function(socket){
 
         socket.emit('session', socket.sessionname);
         socket.emit('user', sendfirstname);
+
+        running=1;
+        setInterval(function(){
+            timer++;
+        },100);
+        time = timer;
+        increment(time);
     });
 
     // Handle the sending of messages
     socket.on('msg', function(data){
-
         var msg = data.msg.trim();
         var newMsg = new Chat ({user: socket.username, ses: session[0],
                                     msg: msg });
@@ -99,6 +112,22 @@ io.sockets.on('connection', function(socket){
         });
     });
 
+    function increment(time){
+            setInterval(function(){
+                if(running == 1 && time < 600) {
+                    time++;
+                    var min = Math.floor(time / 10 / 60);
+                    var secs = Math.floor(time / 10);
+                    socket.emit('timer', {min: min, secs: secs});
+                }else{
+                    socket.emit('Session Ended');
+                }
+            },100);
+    }
+
+    socket.on('Stop Session', function(data){
+        running = data;
+    });
 
     socket.on('load all messages', function(data){
         Chat.find({ses: data}, function(err, docs){
@@ -111,6 +140,8 @@ io.sockets.on('connection', function(socket){
         if(! socket.username) return;
         name.splice(name.indexOf(socket.username), 1);
     });
+
+
 });
 
 
