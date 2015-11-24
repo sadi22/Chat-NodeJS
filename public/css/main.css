@@ -27,19 +27,21 @@ h1{
     height: 500px;
 }
 
+.chat_history{
+    overflow: auto;
+    text-align: center;
+    height: 300px;
+}
+
 .login_area{
     padding-left: 400px;
     padding-top: 200px;
 }
-
 .session_area{
-    padding-left: 75px;
-    padding-top: 130px;
-    height: 375px;
+    padding: 75px;
 }
 
 .yourname ,.yoursession{
-
     padding-left: 10px;
     width: 245px;
     height: 30px;
@@ -47,8 +49,6 @@ h1{
     box-shadow: 0px 3px 3px #e3e4e6;
     background-color: #f0f1f3;
     border: 1px solid #d1d1d1;
-    border-radius: 3px;
-    box-shadow: 0px 3px 3px #e3e4e6;
     margin-bottom: 20px;
     overflow: hidden;
 }
@@ -148,7 +148,6 @@ h1{
 p.ex {
     font: italic bold 24px Georgia, serif;
     text-transform: capitalize;
-    color: dodgerblue;
 }
 
 .session_name{
@@ -157,7 +156,8 @@ p.ex {
 }
 
 #message {
-    width: 610.613px;
+
+    width: 500px;
     height: 96px;
     display: block;
     float:left;

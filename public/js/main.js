@@ -9,7 +9,7 @@ $(document).ready(function() {
     var name = "",
         session = "",
         scroll = 0,
-        flag = 1;
+        flag = 0;
 
     var running = 0;
 
@@ -31,22 +31,24 @@ $(document).ready(function() {
         //sending user name to the server
         socket.emit("login", name,  function(data) {
             if (data) {
+                flag = 1;
                 $('.chatscreen').fadeOut(1500);
+                $('.chat_history').find('b').text('Chat History');
                 $('.message_area').css('display', 'none');
+
             } else {
                 $('.session_area').fadeOut(1500);
                 $('.stopwatch').css('display', 'block');
-        }
+                $('.message_area').find('b').text(name);
+            }
         });
         yourname.val('');
-        return false;
     });
 
 
     //session information send to the server
     $('.session_form').submit(function(e){
         e.preventDefault();
-        flag = 1;
         session= $.trim(yoursession.val());
         if(session.length < 1){
             alert("Please enter a nick name longer than 1 character!");
@@ -55,10 +57,12 @@ $(document).ready(function() {
         $('.session_area').fadeOut(1500);
         $('.chatscreen').fadeIn(1500);
         $('.message_area').fadeIn(1500);
+        $('.message_area').find('b').text(name);
         $('.stopwatch').css('display', 'block');
         socket.emit('session' , session);
         yoursession.val('');
-        return false;
+        flag = 0;
+
 
     });
 
@@ -68,6 +72,7 @@ $(document).ready(function() {
 
     socket.on('user', function(data){
         $('.table tbody > tr').remove();
+        $('.chat_history').find('b').text('Members');
         for (var i= 0; i<data.length; i++)
         {
             displayMembers(data[i]);
@@ -75,10 +80,10 @@ $(document).ready(function() {
     });
 
     socket.on('load all sessions', function(docs){
-            for(var i= 0; i<docs.length; i++)
-            {
-                displaySessions(docs[i]);
-            }
+        for(var i= 0; i<docs.length; i++)
+        {
+            displaySessions(docs[i]);
+        }
     });
 
 
@@ -100,7 +105,7 @@ $(document).ready(function() {
             socket.emit('msg', {msg: textarea.val(), user: name});
         }
         textarea.val(" ");
-        return false;
+
     });
 
     socket.on('receive', function(data){
@@ -110,41 +115,46 @@ $(document).ready(function() {
         }
     });
 
+
+    //countdown functionality starts here
+
     socket.on('timer', function (data) {
-        $('.startPause').click( function(){
-            $('.startPause').css('backgroundColor','#e60000');
-            socket.emit('Stop Session', running);
-        } );
         $('.outputs').html(data.min + ':' + data.secs%60);
+    });
+
+    $('.startPause').click( function(){
+        $('.startPause').css('backgroundColor','#e60000');
+        socket.emit('Stop Session', running);
+    } );
+
+    socket.on('Session Ended', function(){
+        alert('Session Expired');
+        $('.startPause').css('backgroundColor','#e60000');
+        $('.outputs').css('color','#e60000');
+        $('#message').hide();
     });
 
 
 
     $('.table').on('click', 'td', function () {
-        socket.emit('load all messages', $(this).text());
+        if(flag){
+            socket.emit('load all messages', $(this).text().trim());
+        }
+
     });
 
     socket.on('load all messages', function(data){
         $('.session_area').fadeOut(1500);
         $('.chatscreen').fadeIn(1500);
         $('.chats').empty();
+        $('.session_name').find('p').text(data[0].ses);
         for(var i= 0; i<data.length ; i++)
         {
-            createChatMessage(data[i].msg, data[i].user);
 
+            createChatMessage(data[i].msg, data[i].user);
         }
         scrollToBottom();
-
     });
-
-    socket.on('Session Ended', function(data){
-        $('#message').hide();
-    });
-
-
-    ////stopwatch starsts
-    //$('.startPause').click(startPause);
-
 
     // Update the relative time stamps on the chat messages every minute
     setInterval(function(){
@@ -156,7 +166,6 @@ $(document).ready(function() {
 
     // Function that creates a new chat message
     function createChatMessage(msg, user, now){
-
         var who = '';
         if(user===name) {
             who = 'me';
@@ -164,12 +173,11 @@ $(document).ready(function() {
         else {
             who = 'other';
         }
-
         if (arguments.length == 2) {
             var li = $(
                 '<li class=' + who + '>'+
                 '<div class="image">' +
-                '<i class="fa fa-user fa-4" style="color:red"></i>'+
+                '<i class="fa fa-user fa-4x"></i>'+
                 '<b></b>' +
                 '</div>' +
                 '<p></p>' +
@@ -184,14 +192,13 @@ $(document).ready(function() {
             var li = $(
                 '<li class=' + who + '>'+
                 '<div class="image">' +
-                '<i class="fa fa-user fa-4" style="color:red"></i>'+
+                '<i class="fa fa-user fa-4x"></i>'+
                 '<b></b>' +
                 '<i class="timesent" data-time=' + now + '></i> ' +
                 '</div>' +
                 '<p></p>' +
                 '</li>');
 
-            // use the 'text' method to escape malicious user input
             li.find('p').text(msg);
             li.find('b').text(user);
             chat.append(li);
@@ -203,28 +210,23 @@ $(document).ready(function() {
     function scrollToBottom(){
         scroll = scroll+150;
         $(".chatscreen").animate({ scrollTop: scroll},1000);
-
     }
 
 
     function displayMembers(data){
         var tr= $('<tr>' +
-            '<td>'+'<i class="fa fa-user fa-4" style="color:red"></i>'+
+            '<td>'+'<i class="fa fa-user fa-2x"></i>&nbsp'+
             data +'</td>' +
             '</tr>');
-        //console.log(tr);
         $('tbody').append(tr);
 
     }
 
     function displaySessions( data){
         var tr= $('<tr>' +
-            '<td>'+'<i class="fa fa-user fa-4" style="color:red"></i>'+
-                   data +'</td>' +
+            '<td>'+'<i class="fa fa-user fa-2x"></i>&nbsp'+
+            data +'</td>' +
             '</tr>');
-        //console.log(tr);
         $('tbody').append(tr);
     }
 });
-
-

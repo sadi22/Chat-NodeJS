@@ -57,8 +57,7 @@ io.sockets.on('connection', function(socket){
         if(session.length > 0){
             callback(false);
             if(flag){
-                socket.emit('user', name);
-                socket.broadcast.emit('user', name);
+                updateUserNames();
             }
         }else{
             callback(true);
@@ -67,13 +66,11 @@ io.sockets.on('connection', function(socket){
                 socket.emit('load all sessions', docs);
             });
         }
-
         if(running){
             time = timer;
             increment(time);
         }
         socket.emit('session', session[0]);
-
     });
 
     //savings session information
@@ -84,12 +81,8 @@ io.sockets.on('connection', function(socket){
         socket.sessionname= data;
         session.push(socket.sessionname);
 
-        //make array to send name for showing
-        var sendfirstname= [];
-        sendfirstname.push(socket.username);
-
         socket.emit('session', socket.sessionname);
-        socket.emit('user', sendfirstname);
+        updateUserNames();
 
         running=1;
         setInterval(function(){
@@ -103,7 +96,7 @@ io.sockets.on('connection', function(socket){
     socket.on('msg', function(data){
         var msg = data.msg.trim();
         var newMsg = new Chat ({user: socket.username, ses: session[0],
-                                    msg: msg });
+            msg: msg });
         newMsg.save(function(err){
             if(err) throw err;
             //When the server receives a message,
@@ -113,35 +106,50 @@ io.sockets.on('connection', function(socket){
     });
 
     function increment(time){
-            setInterval(function(){
-                if(running == 1 && time < 600) {
-                    time++;
-                    var min = Math.floor(time / 10 / 60);
-                    var secs = Math.floor(time / 10);
-                    socket.emit('timer', {min: min, secs: secs});
-                }else{
-                    socket.emit('Session Ended');
-                }
-            },100);
+        var myVar = setInterval(function(){
+            if(running == 1 && time < 9000) {
+                time++;
+                var min = Math.floor(time / 10 / 60);
+                var secs = Math.floor(time / 10);
+                socket.emit('timer', {min: min, secs: secs});
+            }else{
+               stop();
+            }
+        },100);
+
+        function stop(){
+            session = [];
+            running = 0;
+            clearInterval(myVar);
+            socket.emit('Session Ended');
+        }
     }
 
     socket.on('Stop Session', function(data){
         running = data;
+        socket.emit('Session Ended');
+        name = [];
+        session = [];
     });
 
     socket.on('load all messages', function(data){
         Chat.find({ses: data}, function(err, docs){
             if(err) throw err;
             socket.emit('load all messages', docs);
+            console.log(docs);
         });
     });
 
     socket.on('disconnect', function(data){
         if(! socket.username) return;
         name.splice(name.indexOf(socket.username), 1);
+        updateUserNames();
     });
 
-
+    function updateUserNames(){
+        socket.emit('user', name);
+        socket.broadcast.emit('user', name);
+    }
 });
 
 
