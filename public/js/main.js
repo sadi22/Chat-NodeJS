@@ -1,5 +1,8 @@
+//this file will be executed in the client side
+
 $(document).ready(function() {
 
+    //connect to the soccket and other staffs
     var socket = io.connect(),
         messageTimeSent = $(".timesent"),
         chat = $(".chats"),
@@ -16,6 +19,7 @@ $(document).ready(function() {
     //form
     var yourname= $('.yourname'),
         yoursession= $('.yoursession');
+
 
     //login information send to the server
     $('.login_form').submit(function(e){
@@ -62,37 +66,6 @@ $(document).ready(function() {
         socket.emit('session' , session);
         yoursession.val('');
         flag = 0;
-
-
-    });
-
-    socket.on('session', function(data){
-        $('.session_name').find('p').text(data);
-    });
-
-    socket.on('user', function(data){
-        $('.table tbody > tr').remove();
-        $('.chat_history').find('b').text('Members');
-        for (var i= 0; i<data.length; i++)
-        {
-            displayMembers(data[i]);
-        }
-    });
-
-    socket.on('load all sessions', function(docs){
-        for(var i= 0; i<docs.length; i++)
-        {
-            displaySessions(docs[i]);
-        }
-    });
-
-
-    textarea.keypress(function(e){
-        // Submit the form on enter
-        if(e.which == 13) {
-            e.preventDefault();
-            $('.message_form').submit();
-        }
     });
 
     //a new chat message and display it
@@ -104,10 +77,10 @@ $(document).ready(function() {
             // Send the message to the other person in the chat
             socket.emit('msg', {msg: textarea.val(), user: name});
         }
-        textarea.val(" ");
-
+        textarea.val(" ")
     });
 
+    //receive other user messages from the server
     socket.on('receive', function(data){
         if(data.msg.trim().length) {
             createChatMessage(data.msg, data.user, moment());
@@ -116,8 +89,31 @@ $(document).ready(function() {
     });
 
 
-    //countdown functionality starts here
+    socket.on('session', function(data){
+        $('.session_name').find('p').text(data);
+    });
 
+    //show the user who is on this room
+    socket.on('user', function(data){
+        $('.table tbody > tr').remove();
+        $('.chat_history').find('b').text('Members');
+        for (var i= 0; i<data.length; i++)
+        {
+            displayMembers(data[i]);
+        }
+    });
+
+
+    //load all the sessions of this user
+    socket.on('load all sessions', function(docs){
+        for(var i= 0; i<docs.length; i++)
+        {
+            displaySessions(docs[i]);
+        }
+    });
+
+
+    //countdown functionality starts here
     socket.on('timer', function (data) {
         $('.outputs').html(data.min + ':' + data.secs%60);
     });
@@ -135,14 +131,14 @@ $(document).ready(function() {
     });
 
 
-
     $('.table').on('click', 'td', function () {
         if(flag){
             socket.emit('load all messages', $(this).text().trim());
         }
-
     });
 
+
+    // load all messages of the session
     socket.on('load all messages', function(data){
         $('.session_area').fadeOut(1500);
         $('.chatscreen').fadeIn(1500);
@@ -156,6 +152,7 @@ $(document).ready(function() {
         scrollToBottom();
     });
 
+
     // Update the relative time stamps on the chat messages every minute
     setInterval(function(){
         messageTimeSent.each(function(){
@@ -163,6 +160,7 @@ $(document).ready(function() {
             $(this).text(each.fromNow());
         });
     },60000);
+
 
     // Function that creates a new chat message
     function createChatMessage(msg, user, now){
@@ -207,6 +205,8 @@ $(document).ready(function() {
         }
     }
 
+
+    //for scrolling
     function scrollToBottom(){
         scroll = scroll+150;
         $(".chatscreen").animate({ scrollTop: scroll},1000);
@@ -229,4 +229,12 @@ $(document).ready(function() {
             '</tr>');
         $('tbody').append(tr);
     }
+
+    textarea.keypress(function(e){
+        // Submit the form on enter
+        if(e.which == 13) {
+            e.preventDefault();
+            $('.message_form').submit();
+        }
+    });
 });
