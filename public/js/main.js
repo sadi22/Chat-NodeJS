@@ -2,7 +2,7 @@
 
 $(document).ready(function() {
 
-    //connect to the soccket and other staffs
+    //connect to the socket and other staffs
     var socket = io.connect(),
         messageTimeSent = $(".timesent"),
         chat = $(".chats"),
@@ -14,7 +14,6 @@ $(document).ready(function() {
         scroll = 0,
         flag = 0;
 
-    var running = 0;
 
     //form
     var yourname= $('.yourname'),
@@ -120,14 +119,14 @@ $(document).ready(function() {
 
     $('.startPause').click( function(){
         $('.startPause').css('backgroundColor','#e60000');
-        socket.emit('Stop Session', running);
+        socket.emit('Stop Session');
     } );
 
     socket.on('Session Ended', function(){
         alert('Session Expired');
         $('.startPause').css('backgroundColor','#e60000');
         $('.outputs').css('color','#e60000');
-        $('#message').hide();
+        $('.message_area').hide();
     });
 
 
@@ -231,7 +230,8 @@ $(document).ready(function() {
     }
 
     textarea.keypress(function(e){
-        // Submit the form on enter
+
+        // Submit the form on enter in textarea
         if(e.which == 13) {
             e.preventDefault();
             $('.message_form').submit();
