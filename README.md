@@ -8,7 +8,7 @@ more new chat messages can be entered in that session; the chat session can be
 stopped at any time in between.
 
 ## Installation:
-Please be sure you have node.js installed in your computer.
+Please be sure you have node.js and mongodb installed in your computer.
 
 Then run this command from the terminal.
 
