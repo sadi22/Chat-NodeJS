@@ -177,6 +177,7 @@ mongoose.connect('mongodb://localhost/chat', function(err){
 });
 
 //server will listen to this port
-server.listen(3000,function(){
-    console.log('listening on *:3000');
+server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
+    var addr = server.address();
+    console.log("Chat server listening at", addr.address + ":" + addr.port);
 });
