@@ -160,7 +160,6 @@ h1{
 
 p.ex {
     font: italic bold 24px Georgia, serif;
-    text-transform: capitalize;
 }
 
 .session_name{

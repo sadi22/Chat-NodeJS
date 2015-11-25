@@ -212,6 +212,7 @@ $(document).ready(function() {
     }
 
 
+    //displaying members
     function displayMembers(data){
         var tr= $('<tr>' +
             '<td>'+'<i class="fa fa-user fa-2x"></i>&nbsp'+
@@ -221,6 +222,7 @@ $(document).ready(function() {
 
     }
 
+    //displaying previous sessions
     function displaySessions( data){
         var tr= $('<tr>' +
             '<td>'+'<i class="fa fa-user fa-2x"></i>&nbsp'+
